@@ -1,2 +1,3 @@
 # FastAPI
-FastAPI Projects
+This repo contains all my FastAPI Projects (Self & Course projects)
+

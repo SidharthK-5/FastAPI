@@ -14,7 +14,7 @@ This repo contains all my FastAPI Projects (Self & Course projects)
 
     ```bash
     source fastapienv/bin/activate # On Mac/Linux
-    .\venv\Scripts\activate # On Windows
+    .\fastapienv\Scripts\activate # On Windows
     ```
 
 3. Install the required libraries

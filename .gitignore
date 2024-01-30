@@ -1,2 +1,6 @@
 fastapienv/
 __pycache__/
+*.txt*
+*.pdf*
+*.doc*
+*.ppt*

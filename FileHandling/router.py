@@ -25,8 +25,11 @@ async def upload_file(file: UploadFile):
 
 @router.get("/list-all")
 async def list_all_files():
-    file_names = FileHandleController.list_file_names()
-    return JSONResponse(content=file_names)
+    response = FileHandleController.list_file_names()
+    print(f"{response=}")
+    return JSONResponse(
+        content=response.get("message"), status_code=response.get("status_code")
+    )
 
 
 @router.get("/read-file")

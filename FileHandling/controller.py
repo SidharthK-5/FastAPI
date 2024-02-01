@@ -35,12 +35,14 @@ class FileHandleController:
     @staticmethod
     def list_file_names():
         try:
-            file_names = os.listdir(path="uploads")
-            return file_names
+            upload_dir = "uploads"
+            if not os.path.exists(upload_dir):
+                os.makedirs(upload_dir)
+            file_names = os.listdir(path=upload_dir)
+            return {"message": file_names, "status_code": 200}
         except Exception as e:
             return {
-                "message": "An error occurred",
-                "error": str(e),
+                "message": f"Encountered an error - {str(e)}",
                 "status_code": 404,
             }
 

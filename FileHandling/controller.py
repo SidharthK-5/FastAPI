@@ -20,8 +20,7 @@ class FileHandleController:
             with open(file_path, "wb") as f:
                 f.write(file.file.read())
 
-            response = f"File '{file_name}' uploaded successfully... New {file_path=}"
-            return response
+            return {"message": f"File '{file_name}' uploaded successfully... New {file_path=}", "status_code": 201}
 
         except Exception as e:
             return {"message": "An error occurred", "error": str(e)}
@@ -42,6 +41,22 @@ class FileHandleController:
                 file_content = file.read()
                 file.close()
             return {"message": file_content, "status_code": 200}
+        except FileNotFoundError:
+            return {
+                "message": f"File {file_name} is not present!!!",
+                "status_code": 404,
+            }
+            
+    @staticmethod
+    def edit_file(file_name: str, new_content: str):
+        try:
+            file_path = os.path.join("uploads", file_name)
+            with open(file=file_path, mode="w") as file:
+                file.write(new_content)
+            return {
+                "message": f"File {file_name} edited successfully...",
+                "status_code": 201
+            }
         except FileNotFoundError:
             return {
                 "message": f"File {file_name} is not present!!!",

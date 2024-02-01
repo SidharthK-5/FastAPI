@@ -8,11 +8,19 @@ router = APIRouter(prefix="/file")
 
 @router.post("/upload/")
 async def upload_file(file: UploadFile):
+    extension = file.filename.lower().split(".")[-1]
+    supported_ext = extension in ("txt")
+    if not supported_ext:
+        return JSONResponse(
+            content=f"File type .{extension} is not supported!!!", status_code=500
+        )
     response = FileHandleController.process_upload(file)
-    status_code = response["status_code"]
+    status_code = response.get("status_code")
     if not status_code:
         status_code = 500
-    return JSONResponse(content={"response": response["message"]}, status_code=status_code)
+    return JSONResponse(
+        content={"response": response["message"]}, status_code=status_code
+    )
 
 
 @router.get("/list-all")
@@ -35,6 +43,7 @@ async def edit_file_by_name(edit_file: EditFile):
     return JSONResponse(
         content={"message": response["message"]}, status_code=response["status_code"]
     )
+
 
 @router.delete("/delete-file")
 async def delete_file_by_name(file_name: str):

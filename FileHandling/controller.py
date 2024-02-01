@@ -1,5 +1,7 @@
 import os
-from helper import generate_unique_filename
+from helper import FileNameGenerator
+
+supported_files = ["txt"]
 
 
 class FileHandleController:
@@ -14,13 +16,18 @@ class FileHandleController:
             file_path = os.path.join(upload_dir, file_name)
 
             while os.path.exists(file_path):
-                new_file_name = generate_unique_filename(file_name)
+                new_file_name = FileNameGenerator.generate_unique_filename_timestamp(
+                    file_name
+                )
                 file_path = os.path.join(upload_dir, new_file_name)
 
             with open(file_path, "wb") as f:
                 f.write(file.file.read())
 
-            return {"message": f"File '{file_name}' uploaded successfully... New {file_path=}", "status_code": 201}
+            return {
+                "message": f"File '{file_name}' uploaded successfully... New {file_path=}",
+                "status_code": 201,
+            }
 
         except Exception as e:
             return {"message": "An error occurred", "error": str(e)}
@@ -31,7 +38,11 @@ class FileHandleController:
             file_names = os.listdir(path="uploads")
             return file_names
         except Exception as e:
-            return {"message": "An error occurred", "error": str(e)}
+            return {
+                "message": "An error occurred",
+                "error": str(e),
+                "status_code": 404,
+            }
 
     @staticmethod
     def read_file(file_name: str):
@@ -46,7 +57,7 @@ class FileHandleController:
                 "message": f"File {file_name} is not present!!!",
                 "status_code": 404,
             }
-            
+
     @staticmethod
     def edit_file(file_name: str, new_content: str):
         try:
@@ -55,7 +66,7 @@ class FileHandleController:
                 file.write(new_content)
             return {
                 "message": f"File {file_name} edited successfully...",
-                "status_code": 201
+                "status_code": 201,
             }
         except FileNotFoundError:
             return {

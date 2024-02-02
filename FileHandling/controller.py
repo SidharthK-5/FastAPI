@@ -1,25 +1,25 @@
 import os
 from helper import FileNameGenerator
 
-supported_files = ["txt"]
+SUPPORTED_FILES = ["txt"]
+UPLOAD_DIR = "uploads"
 
 
 class FileHandleController:
     @staticmethod
     def process_upload(file):
         try:
-            upload_dir = "uploads"
-            if not os.path.exists(upload_dir):
-                os.makedirs(upload_dir)
+            if not os.path.exists(UPLOAD_DIR):
+                os.makedirs(UPLOAD_DIR)
 
             file_name = file.filename
-            file_path = os.path.join(upload_dir, file_name)
+            file_path = os.path.join(UPLOAD_DIR, file_name)
 
             while os.path.exists(file_path):
                 new_file_name = FileNameGenerator.generate_unique_filename_timestamp(
                     file_name
                 )
-                file_path = os.path.join(upload_dir, new_file_name)
+                file_path = os.path.join(UPLOAD_DIR, new_file_name)
 
             with open(file_path, "wb") as f:
                 f.write(file.file.read())
@@ -35,11 +35,17 @@ class FileHandleController:
     @staticmethod
     def list_file_names():
         try:
-            upload_dir = "uploads"
-            if not os.path.exists(upload_dir):
-                os.makedirs(upload_dir)
-            file_names = os.listdir(path=upload_dir)
-            return {"message": file_names, "status_code": 200}
+            if not os.path.exists(UPLOAD_DIR):
+                return {"message": "Upload directory is empty!!!", "status_code": 200}
+            else:
+                file_names = os.listdir(path=UPLOAD_DIR)
+                if len(file_names) == 0:
+                    return {
+                        "message": "Upload directory is empty!!!",
+                        "status_code": 200,
+                    }
+                else:
+                    return {"message": file_names, "status_code": 200}
         except Exception as e:
             return {
                 "message": f"Encountered an error - {str(e)}",
@@ -49,7 +55,7 @@ class FileHandleController:
     @staticmethod
     def read_file(file_name: str):
         try:
-            file_path = os.path.join("uploads", file_name)
+            file_path = os.path.join(UPLOAD_DIR, file_name)
             with open(file=file_path, mode="r") as file:
                 file_content = file.read()
                 file.close()
@@ -63,13 +69,16 @@ class FileHandleController:
     @staticmethod
     def edit_file(file_name: str, new_content: str):
         try:
-            file_path = os.path.join("uploads", file_name)
-            with open(file=file_path, mode="w") as file:
-                file.write(new_content)
-            return {
-                "message": f"File {file_name} edited successfully...",
-                "status_code": 201,
-            }
+            file_path = os.path.join(UPLOAD_DIR, file_name)
+            if not os.path.exists(file_path):
+                raise FileNotFoundError("File not found")
+            else:
+                with open(file=file_path, mode="w") as file:
+                    file.write(new_content)
+                return {
+                    "message": f"File {file_name} edited successfully...",
+                    "status_code": 201,
+                }
         except FileNotFoundError:
             return {
                 "message": f"File {file_name} is not present!!!",
@@ -79,7 +88,7 @@ class FileHandleController:
     @staticmethod
     def delete_file(file_name: str):
         try:
-            file_path = os.path.join("uploads", file_name)
+            file_path = os.path.join(UPLOAD_DIR, file_name)
             os.remove(path=file_path)
             return {
                 "message": f"File {file_name} removed successfully!!!",

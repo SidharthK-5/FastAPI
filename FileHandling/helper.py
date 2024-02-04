@@ -2,6 +2,8 @@ import os
 import random
 import string
 from datetime import datetime
+import docx
+from pypdf import PdfReader
 
 
 class FileNameGenerator:
@@ -26,3 +28,34 @@ class FileNameGenerator:
         time_stamp = datetime.now()
         new_file_name = f"{file_name}_{time_stamp}{file_extension}"
         return new_file_name
+
+
+class FileReader:
+    @staticmethod
+    def read_text(file_path: str) -> str:
+        with open(file=file_path, mode="r") as file:
+            file_content = file.read()
+            file.close()
+        return file_content
+
+    @staticmethod
+    def read_pdf(file_path: str) -> str:
+        reader = PdfReader(file_path)
+        file_content = ""
+
+        total_pages = len(reader.pages)
+        for page_id in range(total_pages):
+            page = reader.pages[page_id].extract_text()
+            file_content = file_content + "\n\n" + page
+
+        return file_content
+
+    @staticmethod
+    def read_docx(file_path: str) -> str:
+        document = docx.Document(file_path)
+        file_content = ""
+
+        for paragraph in document.paragraphs:
+            file_content = file_content + "\n\n" + paragraph.text
+
+        return file_content

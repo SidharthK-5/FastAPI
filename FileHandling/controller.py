@@ -1,5 +1,5 @@
 import os
-from helper import FileNameGenerator
+from helper import FileNameGenerator, FileReader
 
 SUPPORTED_FILES = ["txt"]
 UPLOAD_DIR = "uploads"
@@ -56,10 +56,23 @@ class FileHandleController:
     def read_file(file_name: str):
         try:
             file_path = os.path.join(UPLOAD_DIR, file_name)
-            with open(file=file_path, mode="r") as file:
-                file_content = file.read()
-                file.close()
-            return {"message": file_content, "status_code": 200}
+            # with open(file=file_path, mode="r") as file:
+            #     file_content = file.read()
+            #     file.close()
+            file_ext = file_name.split(".")[-1]
+            match file_ext:
+                case "txt":
+                    file_content = FileReader.read_text(file_path=file_path)
+                case "pdf":
+                    file_content = FileReader.read_pdf(file_path=file_path)
+                case "docx":
+                    file_content = FileReader.read_docx(file_path=file_path)
+                case _:
+                    file_content = None
+            if file_content is None:
+                return {"message": "Check your file name!!!", "status_code": 200}
+            else:
+                return {"message": file_content, "status_code": 200}
         except FileNotFoundError:
             return {
                 "message": f"File {file_name} is not present!!!",
@@ -70,6 +83,12 @@ class FileHandleController:
     def edit_file(file_name: str, new_content: str):
         try:
             file_path = os.path.join(UPLOAD_DIR, file_name)
+            file_ext = file_name.split(".")[-1]
+            if file_ext != "txt":
+                return {
+                    "message": f"Sorry :( {file_ext.upper()} file type does not have edit feature",
+                    "status_code": 201,
+                }
             if not os.path.exists(file_path):
                 raise FileNotFoundError("File not found")
             else:

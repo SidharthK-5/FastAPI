@@ -9,7 +9,7 @@ router = APIRouter(prefix="/file")
 @router.post("/upload/")
 async def upload_file(file: UploadFile):
     extension = file.filename.lower().split(".")[-1]
-    supported_ext = extension in ("txt")
+    supported_ext = extension in ("txt", "pdf", "docx")
     if not supported_ext:
         return JSONResponse(
             content={"response": f"{extension.upper()} file type  is not supported!!!"},

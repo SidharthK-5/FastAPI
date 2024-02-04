@@ -4,3 +4,5 @@ black
 black[jupyter]
 sqlalchemy
 python-multipart
+python-docx
+pypdf

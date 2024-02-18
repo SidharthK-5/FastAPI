@@ -6,3 +6,4 @@ sqlalchemy
 python-multipart
 python-docx
 pypdf
+passlib[bcrypt]

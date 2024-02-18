@@ -7,3 +7,4 @@ python-multipart
 python-docx
 pypdf
 passlib[bcrypt]
+python-jose[cryptography]

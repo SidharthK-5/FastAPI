@@ -28,7 +28,7 @@ class UserVerification(BaseModel):
     new_password: str = Field(min_length=4)
 
 @router.get("/get-details", status_code=status.HTTP_200_OK)
-async def get_all_users(user: user_dependency, db: db_dependency):
+async def get_user_details(user: user_dependency, db: db_dependency):
     if user is None:
         raise HTTPException(status_code=401, detail="Authentication failed")
     users = db.query(Users).filter(Users.id == user.get("id")).first()

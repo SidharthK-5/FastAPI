@@ -4,8 +4,8 @@ from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException
 from starlette import status
 from passlib.context import CryptContext
-from models import Users
-from database import SessionLocal
+from ..models import Users
+from ..database import SessionLocal
 from .auth import get_current_user
 
 router = APIRouter(prefix="/user")

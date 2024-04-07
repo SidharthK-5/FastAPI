@@ -5,3 +5,4 @@ __pycache__/
 *.doc*
 *.ppt*
 uploads/
+.DS_Store

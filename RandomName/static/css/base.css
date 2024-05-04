@@ -1,0 +1,32 @@
+
+body {
+  background: #e9b5b5;
+  color: #1f1f27;
+  padding-top: 70px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #3d08cf;
+}
+
+.main-color {
+  background-color: #0e76a8 ;
+}
+
+.strike-through-td {
+    text-decoration: line-through;
+}
+
+textarea {
+  text-align: center;
+  color: #2c039b;
+}
+
+.text-area-dev {
+  color: rgb(21, 220, 48);
+}
+
+
+.text-area-qa {
+  color: rgb(231, 24, 24);
+}

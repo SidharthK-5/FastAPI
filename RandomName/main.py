@@ -2,8 +2,6 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
-# from starlette import status
-# from starlette.responses import RedirectResponse
 import random
 from team_members import DEV_TEAM, QA_TEAM, WHOLE_TEAM
 
@@ -32,4 +30,3 @@ async def random_qa_team_member():
 @app.get("/random-team-member", response_class=HTMLResponse)
 async def random_team_member():
     return random.choice(WHOLE_TEAM)
-

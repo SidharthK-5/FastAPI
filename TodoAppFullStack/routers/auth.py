@@ -1,6 +1,5 @@
 import sys
 from fastapi import Depends, Form, HTTPException, Request, status, APIRouter, Response
-from pydantic import BaseModel
 from typing import Optional
 from starlette.responses import RedirectResponse
 import models

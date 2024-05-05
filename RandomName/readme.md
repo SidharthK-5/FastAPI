@@ -9,11 +9,11 @@
 ## Set-up Instructions
 
 1. Create a file **team_members.py** inside **RandomName**
-2. Create two lists DEV_TEAM and QA_TEAM.
-3. Add a third list WHOLE_TEAM as the sum of the first two.
+2. Create two lists _DEV_TEAM_ and _QA_TEAM_.
+3. Add a third list _WHOLE_TEAM_ as the sum of the first two.
 
-### Sample file
-```python team_members.py
+### Sample of team_members.py
+```python
 DEV_TEAM = [
     "Tony",
     "Steve",

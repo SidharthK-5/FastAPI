@@ -5,14 +5,15 @@ This repo contains all my FastAPI Projects (Self & Course projects)
 ## Projects Overview
 
 ### Personal
+
 1. FileHandling
 2. [RandomName](RandomName/readme.md)
 
 ### Course Projects
+
 1. Books
 2. TodoApp
 3. TodoAppFullStack
-
 
 ## Steps to set up this repo in local
 

@@ -24,17 +24,46 @@
                         
                         <tbody>
                             {% for member in members %}
-                                <tr class="pointer">
-                                    <td>{{loop.index}}</td>
-                                    <td>{{member.name}}</td>
-                                    <td>{% if member.hosted == True %} Yes {% else %} No {% endif %}</td>
-                                    <td>{% if member.exception == True %} Yes {% else %} No {% endif %}</td>
-                                    <td>
-                                        <button onclick="window.location.href='edit-member/{{member.id}}'" type="button" class="btn btn-info">
-                                            Edit
-                                        </button>
-                                    </td>
-                                </tr>
+                                {% if member.hosted == True %}
+                                    <tr class="pointer alert alert-success">
+                                        <td>{{loop.index}}</td>
+                                        <td>{{member.name}}</td>
+                                        <td>{% if member.hosted == True %} Yes {% else %} No {% endif %}</td>
+                                        <td>{% if member.exception == True %} Yes {% else %} No {% endif %}</td>
+                                        <td>
+                                            <button onclick="window.location.href='edit-member/{{member.id}}'" type="button" class="btn btn-info">
+                                                Edit
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                {% elif member.exception == True %}
+                                    <tr class="pointer alert alert-secondary">
+                                        <td>{{loop.index}}</td>
+                                        <td>{{member.name}}</td>
+                                        <td>{% if member.hosted == True %} Yes {% else %} No {% endif %}</td>
+                                        <td>{% if member.exception == True %} Yes {% else %} No {% endif %}</td>
+                                        <td>
+                                            <button onclick="window.location.href='edit-member/{{member.id}}'" type="button" class="btn btn-info">
+                                                Edit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    
+                                {% else %}
+                                    <tr class="pointer">
+                                        <td>{{loop.index}}</td>
+                                        <td>{{member.name}}</td>
+                                        <td>{% if member.hosted == True %} Yes {% else %} No {% endif %}</td>
+                                        <td>{% if member.exception == True %} Yes {% else %} No {% endif %}</td>
+                                        <td>
+                                            <button onclick="window.location.href='edit-member/{{member.id}}'" type="button" class="btn btn-info">
+                                                Edit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                    
                             {% endfor %}
                         </tbody>
                     </table>

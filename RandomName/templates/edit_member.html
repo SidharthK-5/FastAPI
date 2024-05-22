@@ -1,0 +1,39 @@
+{% include "layout.html" %}
+
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    Edit Member
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="name" value="{{member.name}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Team</label>
+                            <select name="team" class="form-control">
+                                <option {% if member.team == "DEV" %} selected="selected" {% endif %}>DEV</option>
+                                <option {% if member.team == "QA" %} selected="selected" {% endif %}>QA</option>
+                                <option {% if member.team == "OTHER" %} selected="selected" {% endif %}>OTHER</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Already Hosted?</label>
+                            <select name="hosted" class="form-control">
+                                <option {% if member.hosted == False %} selected="selected" {% endif %}>No</option>
+                                <option {% if member.hosted == True %} selected="selected" {% endif %}>Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>To be Exempted?</label>
+                            <select name="exception" class="form-control">
+                                <option {% if member.exception == False %} selected="selected" {% endif %}>No</option>
+                                <option {% if member.exception == True %} selected="selected" {% endif %}>Yes</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Modify Member</button>
+                    </form>
+            </div>
+        </div>

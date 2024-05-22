@@ -1,0 +1,43 @@
+{% include "layout.html" %}
+
+        <div class="container">
+            <div class="card text-center">
+                <div class="card-header">
+                    Team Members
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">View Team Members</h5>
+
+                    <div class="d-flex justify-content-end mb-3">
+                        <a class="btn btn-primary" href="add-member">Add a new member!</a>
+                    </div>
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sl. No.</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Hosted?</th>
+                                <th scope="col">Exempted?</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            {% for member in members %}
+                                <tr class="pointer">
+                                    <td>{{loop.index}}</td>
+                                    <td>{{member.name}}</td>
+                                    <td>{% if member.hosted == True %} Yes {% else %} No {% endif %}</td>
+                                    <td>{% if member.exception == True %} Yes {% else %} No {% endif %}</td>
+                                    <td>
+                                        <button onclick="window.location.href='edit-member/{{member.id}}'" type="button" class="btn btn-info">
+                                            Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>

@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GenAIe</title>
-        <link rel="stylesheet" type="text/css" href="{{ url_for("static", path="/css/base.css") }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for("static", path="/css/bootstrap.css") }}">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    </head>
-    <body>
+
+
+{% include "layout.html" %}
+        <br><br>
         <center>
-            <h1>Team GenAIe</h1>
+            <h1>Who is the Next Host???</h1>
             <br><br>
             <div class="card-deck">
                 <div class="card text-center">
@@ -37,18 +29,18 @@
             <script>
                 function fetchData(cardId, url) {
                     fetch(url)
-                        .then(response => response.text())
-                        .then(data => {
-                            document.getElementById(cardId).value = data;
-                        })
-                        .catch(error => console.log(error));
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data.trim() === 'No available member to host.') {
+                            if (cardId !== 'card3') {
+                                document.getElementById(cardId).value = 'No available member to host.';
+                            }
+                        } else {
+                            document.getElementById(cardId).value = data.replace(/"/g, '');
+                        }
+                    })
+                    .catch(error => console.log(error));
                 }
             </script>
         </center>
 
-
-        <script scr="{{ url_for("static", path="/js/jquery-slim.js") }}"></script>
-        <script scr="{{ url_for("static", path="/js/popperr.js") }}"></script>
-        <script scr="{{ url_for("static", path="/js/bootstrap.js") }}"></script>
-    </body>
-</html>

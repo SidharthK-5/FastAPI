@@ -9,4 +9,4 @@ class Members(Base):
     name = Column(String)
     team = Column(String)
     hosted = Column(Boolean, default=False)
-    exception = Column(Boolean, default=False)
+    exception = Column(String, default="No")

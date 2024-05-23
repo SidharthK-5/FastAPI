@@ -29,8 +29,9 @@
                         <div class="form-group">
                             <label>To be Exempted?</label>
                             <select name="exception" class="form-control">
-                                <option {% if member.exception == False %} selected="selected" {% endif %}>No</option>
-                                <option {% if member.exception == True %} selected="selected" {% endif %}>Yes</option>
+                                <option {% if member.exception == "No" %} selected="selected" {% endif %}>No</option>
+                                <option {% if member.exception == "Yes" %} selected="selected" {% endif %}>Yes</option>
+                                <option {% if member.exception == "Tentative" %} selected="selected" {% endif %}>Tentative</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Modify Member</button>

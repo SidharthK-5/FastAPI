@@ -6,4 +6,4 @@ __pycache__/
 *.ppt*
 uploads/
 .DS_Store
-team_members.py
+RandomName.db

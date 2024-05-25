@@ -2,46 +2,22 @@
 
 ## About
 
-- This is a single page web application with three cards; DEV, QA and Whole team.
+- This is a web application with four cards; _DEV_, _QA_, _Whole team_ and _Co-Host_ (for Team Leads).
 - Each card has a button associated with it.
 - When you click the button, a random name appears in the corresponding card.
-- DEV and QA cards can generate names from their respective team, and the last card will generate names from both teams.
+- DEV and QA cards can generate names from their respective team, whole team card will select all members except team leads, Co-Host card will only select team leads.
+- In **View All Members** page, members in blue colour are Co-hosts and in gray colour are to be excempted completely from name selection.
 
-## Set-up Instructions
+## Set-up RandomName in your system
 
-1. Create a file **team_members.py** inside **RandomName**
-2. Create two lists _DEV_TEAM_ and _QA_TEAM_.
-3. Add an optional list _OTHER_TEAM_ for members who don't belong to DEV or QA.
-4. Create a list _EXCEPTION_LIST_ for the members to be excluded from random selection
-5. Set the list _WHOLE_TEAM_ as the sum of lists except _EXCEPTION_LIST_. Add _OTHER_TEAM_ only if it is set.
+1. Add project logo with name **project_name.png** inside static/images folder.
+2. Run the application:
 
-### Sample of team_members.py
+    ```bash
+    uvicorn main:app --reload
+    ```
 
-```python
-DEV_TEAM = [
-    "Tony",
-    "Steve",
-    "Bruce",
-    "Thor",
-    "Natasha",
-    "Clint",
-]
-QA_TEAM = [
-    "Nick",
-    "Phill",
-    "Maria",
-]
-OTHER_TEAM = [
-    "Peter",
-    "Rocket",
-    "Groot",
-    "Gamora",
-    "Drax",
-]
-EXCEPTION_LIST = []
-
-try:
-    WHOLE_TEAM = DEV_TEAM + QA_TEAM + OTHER_TEAM
-except NameError:
-    WHOLE_TEAM = DEV_TEAM + QA_TEAM
-```
+3. Add new team members from **Add Members** window.
+4. Categorise the members into _DEV_, _QA_ or _Satellite_ (Others contributers or Non-DEV/QA).
+5. If they've already selected before, set _Hosting status_ to Yes, No otherwise.
+6. Add _Excemption_ status. Tentative is for co-host selection (Team leads).

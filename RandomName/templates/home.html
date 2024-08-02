@@ -1,23 +1,37 @@
 
 
 {% include "layout.html" %}
-        <br><br>
+        <br>
         <center>
             <h1>Who is the Next Host???</h1>
-            <br><br>
+            <br>
             <div class="card-deck" style="width: 50%;">
                 <div class="card text-center">
                     <div class="card-body">
                         <textarea id="card1" class="form-control text-area-dev" rows="1" readonly></textarea>
                         <br>
-                        <button class="btn btn-primary" onclick="fetchData('card1', 'members/random-dev-team-member')">Get DEV Member</button>
+                        <button class="btn btn-primary" onclick="fetchDataAll(['card1', 'count1', 'count2', 'count3', 'count4'], ['members/random-dev-team-member', 'members/count-dev-team-members', 'members/count-qa-team-members', 'members/count-all-members', 'members/count-tentative-team-members'])">Get DEV Member</button>
+                        <br><br> 
+                        <p>
+                            <b>No. of DEV Team Members Left to Host:</b>
+                            <center>
+                                <textarea id="count1" class="form-control text-area-dev" rows="1" style="width: 15%" readonly></textarea>
+                            </center>
+                        </p>
                     </div>
                 </div>
                 <div class="card text-center">
                     <div class="card-body">
                         <textarea id="card2" class="form-control text-area-dev" rows="1" readonly></textarea>
                         <br>
-                        <button class="btn btn-primary" onclick="fetchData('card2', 'members/random-qa-team-member')">Get QA Member</button>
+                        <button class="btn btn-primary" onclick="fetchDataAll(['card2', 'count1', 'count2', 'count3', 'count4'], ['members/random-qa-team-member', 'members/count-dev-team-members', 'members/count-qa-team-members', 'members/count-all-members', 'members/count-tentative-team-members'])">Get QA Member</button>
+                        <br><br> 
+                        <p>
+                            <b>No. of QA Team Members Left to Host:</b>
+                            <center>
+                                <textarea id="count2" class="form-control text-area-dev" rows="1" style="width: 15%" readonly></textarea>
+                            </center>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -27,7 +41,14 @@
                     <div class="card-body">
                         <textarea id="card3" class="form-control" rows="1" readonly></textarea>
                         <br>
-                        <button class="btn btn-primary" onclick="fetchData('card3', 'members/random-team-member')">Get Team Member</button>
+                        <button class="btn btn-primary" onclick="fetchDataAll(['card3', 'count1', 'count2', 'count3', 'count4'], ['members/random-team-member', 'members/count-dev-team-members', 'members/count-qa-team-members', 'members/count-all-members', 'members/count-tentative-team-members'])">Get Team Member</button>
+                        <br><br> 
+                        <p>
+                            <b>No. of Team Members Left to Host:</b>
+                            <center>
+                                <textarea id="count3" class="form-control text-area-dev" rows="1" style="width: 15%" readonly></textarea>
+                            </center>
+                        </p>
                     </div>
                 </div>
                 
@@ -35,11 +56,18 @@
                     <div class="card-body">
                         <textarea id="card4" class="form-control" rows="1" readonly></textarea>
                         <br>
-                        <button class="btn btn-primary" onclick="fetchData('card4', 'members/random-tentative-team-member')">Get Co-Host</button>
+                        <button class="btn btn-primary" onclick="fetchDataAll(['card4', 'count1', 'count2', 'count3', 'count4'], ['members/random-tentative-team-member', 'members/count-dev-team-members', 'members/count-qa-team-members', 'members/count-all-members', 'members/count-tentative-team-members'])">Get Co-Host</button>
+                        <br><br> 
+                        <p>
+                            <b>No. of Leads Left to Host:</b>
+                            <center>
+                                <textarea id="count4" class="form-control text-area-dev" rows="1" style="width: 15%" readonly></textarea>
+                            </center>
+                        </p>
                     </div>
                 </div>
             </div>
-            <br><br>
+            <br>
             <div>
                 <img src="{{ url_for("static", path="/images/project_logo.png") }}" alt="Project Logo not found :(" style="width: 250px; height: 100px;">
             </div>
@@ -53,6 +81,14 @@
                     })
                     .catch(error => console.log(error));
                 }
-            </script>
-        </center>
+
+                function fetchDataAll(cardIds, urls) {
+                    for (let i = 0; i < cardIds.length; i++) {
+                        fetchData(cardIds[i], urls[i]);
+                    }
+                }
+                window.onload = function() {
+                    fetchDataAll(['count1', 'count2', 'count3', 'count4'], ['members/count-dev-team-members', 'members/count-qa-team-members', 'members/count-all-members', 'members/count-tentative-team-members']);
+                };
+            </script>  </center>
 

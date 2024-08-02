@@ -68,7 +68,11 @@ async def reset_hosting_status(
     exception_type: str = None, db: Session = Depends(get_db)
 ):
     if not exception_type:
-        members = db.query(models.Members).all()
+        members = (
+            db.query(models.Members)
+            .filter(models.Members.exception.in_(["Yes", "No"]))
+            .all()
+        )
     else:
         members = (
             db.query(models.Members)
@@ -206,3 +210,27 @@ async def edit_member_commit(
     db.commit()
 
     return RedirectResponse(url="/members/view-all", status_code=status.HTTP_302_FOUND)
+
+
+@router.get("/count-dev-team-members")
+async def count_dev_team_members(db: Session = Depends(get_db)):
+    members = await query_from_db(team="DEV", db=db)
+    return len(members)
+
+
+@router.get("/count-qa-team-members")
+async def count_qa_team_members(db: Session = Depends(get_db)):
+    members = await query_from_db(team="QA", db=db)
+    return len(members)
+
+
+@router.get("/count-tentative-team-members")
+async def count_tentative_team_members(db: Session = Depends(get_db)):
+    members = await query_from_db(exception="Tentative", db=db)
+    return len(members)
+
+
+@router.get("/count-all-members")
+async def count_all_members(db: Session = Depends(get_db)):
+    members = await query_from_db(db=db)
+    return len(members)

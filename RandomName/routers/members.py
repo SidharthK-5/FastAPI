@@ -211,6 +211,17 @@ async def edit_member_commit(
 
     return RedirectResponse(url="/members/view-all", status_code=status.HTTP_302_FOUND)
 
+@router.get("/delete-member/{member_id}", response_class=HTMLResponse)
+async def delete_member(request: Request, member_id: int, db: Session = Depends(get_db)):
+    member = db.query(models.Members).filter(models.Members.id == member_id)
+    if member is None:
+        return RedirectResponse(url="/members/view-all", status_code=status.HTTP_302_FOUND)
+    
+    db.query(models.Members).filter(models.Members.id == member_id).delete()
+    db.commit()
+
+    return RedirectResponse(url="/members/view-all", status_code=status.HTTP_302_FOUND)
+
 
 @router.get("/count-dev-team-members")
 async def count_dev_team_members(db: Session = Depends(get_db)):

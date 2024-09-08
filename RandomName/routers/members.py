@@ -96,6 +96,7 @@ async def view_all(request: Request, db: Session = Depends(get_db)):
 
 @router.get("/random-dev-team-member")
 async def random_dev_team_member(db: Session = Depends(get_db)):
+    message = None
     members = await query_from_db(team="DEV", db=db)
     if len(members) > 0:
         selected_member = random.choice(members)
@@ -103,13 +104,14 @@ async def random_dev_team_member(db: Session = Depends(get_db)):
 
         # Update hosting status of the selected member
         await update_hosting_status(member_id=selected_member.id, db=db)
-        return member_name
+        return {"result": member_name, "msg": message}
     else:
-        return "No available member to host."
+        return {"result": "", "msg": "No available DEV member to host."}
 
 
 @router.get("/random-qa-team-member")
 async def random_qa_team_member(db: Session = Depends(get_db)):
+    message = None
     members = await query_from_db(team="QA", db=db)
     if len(members) > 0:
         selected_member = random.choice(members)
@@ -117,41 +119,43 @@ async def random_qa_team_member(db: Session = Depends(get_db)):
 
         # Update hosting status of the selected member
         await update_hosting_status(member_id=selected_member.id, db=db)
-        return member_name
+        return {"result": member_name, "msg": message}
     else:
-        return "No available member to host."
+        return {"result": "", "msg": "No available QA member to host."}
 
 
 @router.get("/random-tentative-team-member")
 async def random_tentative_team_member(db: Session = Depends(get_db)):
+    message = None
     members = await query_from_db(exception="Tentative", db=db)
-    if len(members) == 0:
-        print("No available member to host.")
-        await reset_hosting_status(exception_type="Tentative", db=db)
-        members = await query_from_db(exception="Tentative", db=db)
-
     selected_member = random.choice(members)
     member_name = selected_member.name
+    if len(members) == 1:
+        # Reset hosting status of all "Tentative" members since selected member is the last
+        await reset_hosting_status(exception_type="Tentative", db=db)
+        message = "All tentative members have been selected. Resetting database..."
+    else:
+        # Update hosting status of the selected member
+        await update_hosting_status(member_id=selected_member.id, db=db)
 
-    # Update hosting status of the selected member
-    await update_hosting_status(member_id=selected_member.id, db=db)
-    return member_name
+    return {"result": member_name, "msg": message}
 
 
 @router.get("/random-team-member")
 async def random_team_member(db: Session = Depends(get_db)):
+    message = None
     members = await query_from_db(db=db)
-    if len(members) == 0:
-        print("No available member to host.")
-        await reset_hosting_status(db=db)
-        members = await query_from_db(db=db)
-
     selected_member = random.choice(members)
     member_name = selected_member.name
+    if len(members) == 1:
+        # Reset hosting status of all regular team members since selected member is the last
+        await reset_hosting_status(db=db)
+        message = "All regular team members have been selected. Resetting database..."
+    else:
+        # Update hosting status of the selected member
+        await update_hosting_status(member_id=selected_member.id, db=db)
 
-    # Update hosting status of the selected member
-    await update_hosting_status(member_id=selected_member.id, db=db)
-    return member_name
+    return {"result": member_name, "msg": message}
 
 
 @router.get("/add-member", response_class=HTMLResponse)
@@ -211,12 +215,17 @@ async def edit_member_commit(
 
     return RedirectResponse(url="/members/view-all", status_code=status.HTTP_302_FOUND)
 
+
 @router.get("/delete-member/{member_id}", response_class=HTMLResponse)
-async def delete_member(request: Request, member_id: int, db: Session = Depends(get_db)):
+async def delete_member(
+    request: Request, member_id: int, db: Session = Depends(get_db)
+):
     member = db.query(models.Members).filter(models.Members.id == member_id)
     if member is None:
-        return RedirectResponse(url="/members/view-all", status_code=status.HTTP_302_FOUND)
-    
+        return RedirectResponse(
+            url="/members/view-all", status_code=status.HTTP_302_FOUND
+        )
+
     db.query(models.Members).filter(models.Members.id == member_id).delete()
     db.commit()
 
@@ -226,22 +235,22 @@ async def delete_member(request: Request, member_id: int, db: Session = Depends(
 @router.get("/count-dev-team-members")
 async def count_dev_team_members(db: Session = Depends(get_db)):
     members = await query_from_db(team="DEV", db=db)
-    return len(members)
+    return {"result": len(members), "msg": None}
 
 
 @router.get("/count-qa-team-members")
 async def count_qa_team_members(db: Session = Depends(get_db)):
     members = await query_from_db(team="QA", db=db)
-    return len(members)
+    return {"result": len(members), "msg": None}
 
 
 @router.get("/count-tentative-team-members")
 async def count_tentative_team_members(db: Session = Depends(get_db)):
     members = await query_from_db(exception="Tentative", db=db)
-    return len(members)
+    return {"result": len(members), "msg": None}
 
 
 @router.get("/count-all-members")
 async def count_all_members(db: Session = Depends(get_db)):
     members = await query_from_db(db=db)
-    return len(members)
+    return {"result": len(members), "msg": None}

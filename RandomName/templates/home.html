@@ -75,9 +75,24 @@
             <script>
                 function fetchData(cardId, url) {
                     fetch(url)
-                    .then(response => response.text())
+                    .then(response => response.json())
                     .then(data => {
-                        document.getElementById(cardId).value = data.replace(/"/g, '');
+                        document.getElementById(cardId).value = data.result;
+                        if (data.msg) {
+                            if (data.msg.includes("No available")) {
+                                info_level = 'warning'
+                            } else {
+                                info_level = 'info'
+                            }
+                            Swal.fire({
+                                title: 'RandomName says!',
+                                html: data.msg,
+                                icon: info_level,
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'OK'
+                            })
+                        }
                     })
                     .catch(error => console.log(error));
                 }
@@ -90,5 +105,6 @@
                 window.onload = function() {
                     fetchDataAll(['count1', 'count2', 'count3', 'count4'], ['members/count-dev-team-members', 'members/count-qa-team-members', 'members/count-all-members', 'members/count-tentative-team-members']);
                 };
-            </script>  </center>
+            </script>
+        </center>
 

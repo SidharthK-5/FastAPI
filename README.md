@@ -37,3 +37,7 @@ This repo contains all my FastAPI Projects (Self & Course projects)
     ```
 
 **There you are. All good to go!!!**
+
+## Support
+
+For any issues, please report them in the Issues section of this repository. Feel free to submit a pull request if you've made improvements or bug fixes. Your contribution is highly appreciated!

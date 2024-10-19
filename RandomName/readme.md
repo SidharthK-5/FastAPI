@@ -1,23 +1,57 @@
 # RandomName
 
-## About
+(This project has been moved to a different repository)
 
-- This is a web application with four cards; _DEV_, _QA_, _Whole team_ and _Co-Host_ (for Team Leads).
-- Each card has a button associated with it.
-- When you click the button, a random name appears in the corresponding card.
-- DEV and QA cards can generate names from their respective team, whole team card will select all members except team leads, Co-Host card will only select team leads.
-- In **View All Members** page, members in blue colour are Co-hosts and in gray colour are to be excempted completely from name selection.
+## Overview  
 
-## Set-up RandomName in your system
+RandomName is a robust web application designed to facilitate selecting members for specific events within teams, avoiding confusion of team manager to choose from the long-list. The app features four distinct cards: _DEV_, _QA_, _Whole Team_, and _Co-Host_ (specifically designed for Team Leads).
+  
+Each card has an associated button that, when clicked, generates a random name from the corresponding team. This feature is especially useful for randomly assigning tasks, picking meeting participants, or simply adding a bit of fun to your team interactions.  
 
-1. Add project logo with name **project_name.png** inside static/images folder.
-2. Run the application:
+- The **DEV** and **QA** cards generate names from their respective teams.  
+- The **Whole Team** card selects from all team members, excluding team leads.  
+- The **Co-Host** card specifically selects team leads.  
 
-    ```bash
-    uvicorn main:app --reload
-    ```
+In the **View All Members** page, you'll find a comprehensive list of your team members. Co-hosts are highlighted in blue, while members marked in gray are exempted from name selection.  
 
-3. Add new team members from **Add Members** window.
-4. Categorise the members into _DEV_, _QA_ or _Satellite_ (Others contributers or Non-DEV/QA).
-5. If they've already selected before, set _Hosting status_ to Yes, No otherwise.
-6. Add _Excemption_ status. Tentative is for co-host selection (Team leads).
+## Installation Guide  
+
+Follow these steps to set-up RandomName in your system:  
+
+1. Create a virtual environment named 'randomenv'  
+  
+    ```bash  
+    python -m venv randomenv  
+    ```  
+
+2. Activate the virtual environment  
+  
+    ```bash  
+    source randomenv/bin/activate # On Mac/Linux  
+    .\randomenv\Scripts\activate # On Windows  
+    ```  
+
+3. Install the required libraries  
+  
+    ```bash  
+    pip install -r requirements.txt  
+    ```  
+
+4. Add your project logo with the file name **project_name.png** inside the static/images folder.  
+
+5. Launch the application:  
+  
+    ```bash  
+    uvicorn main:app --reload  
+    ```  
+
+## Usage Guide  
+
+Once you've set up RandomName, you can begin adding team members and categorizing them:  
+
+1. Add new team members via the **Add Members** window.  
+2. Categorize each member as either _DEV_, _QA_, or _Satellite_ (for contributors who aren't part of the DEV/QA team).  
+3. Indicate each member's _Hosting Status_. Set this to 'Yes' if they've been selected before, 'No' otherwise.  
+4. Set the _Exemption Status_ for each member. 'Tentative' is for potential co-host selection (team leads).  
+
+You're all set! Enjoy using RandomName to enhance your team's organization and communication.  

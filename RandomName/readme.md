@@ -16,32 +16,47 @@ In the **View All Members** page, you'll find a comprehensive list of your team 
 
 ## Installation Guide  
 
-Follow these steps to set-up RandomName in your system:  
+Follow these steps to set-up RandomName in your system:
 
-1. Create a virtual environment named 'randomenv'  
+### Prerequisites
+
+- Python 3.12 or higher
+
+1. Clone the repository
+
+    ```bash
+    git clone https://github.com/SidharthK-5/RandomName.git
+    cd RandomName
+    ```
+
+2. Install uv package manager
+
+    ```bash
+    curl -LsSf https://astral.sh/uv/install.sh | sh # On Mac/Linux  
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex" # On Windows 
+    ```
+
+3. Create and activate virtual environment  
   
     ```bash  
-    python -m venv randomenv  
+    uv venv
+    source .venv/bin/activate # On Mac/Linux  
+    .\.venv\Scripts\activate # On Windows  
     ```  
 
-2. Activate the virtual environment  
+4. Install project dependencies
   
     ```bash  
-    source randomenv/bin/activate # On Mac/Linux  
-    .\randomenv\Scripts\activate # On Windows  
+    uv pip install -e . 
     ```  
 
-3. Install the required libraries  
-  
-    ```bash  
-    pip install -r requirements.txt  
-    ```  
+5. Add your project logo with the file name **project_name.png** inside the static/images folder.  
 
-4. Add your project logo with the file name **project_name.png** inside the static/images folder.  
-
-5. Launch the application:  
+6. Launch the application:  
   
-    ```bash  
+    ```bash
+    cd src/orchestrator  # On Mac/Linux
+    cd .\src\orchestrator  # On Windows
     uvicorn main:app --reload  
     ```  
 
@@ -55,3 +70,39 @@ Once you've set up RandomName, you can begin adding team members and categorizin
 4. Set the _Exemption Status_ for each member. 'Tentative' is for potential co-host selection (team leads).  
 
 You're all set! Enjoy using RandomName to enhance your team's organization and communication.  
+
+## Development Guide
+
+1. Install pre-commit
+
+    ```bash
+    pip install pre-commit
+    pre-commit install
+    ```
+
+2. Adding dependencies to project
+
+    ```bash
+    uv add <package-name>
+    ```
+
+3. Removing dependencies to porject
+
+    ```bash
+    uv remove <package-name>
+    ```
+
+4. Update uv version
+
+    ```bash
+    pip install --upgrade uv
+    ```
+
+5. Update project version
+
+    ```bash
+    # version_type can only be major, minor or patch
+    python scripts/bump_version.py <version_type>  # On Mac/Linux
+    python .\scripts\bump_version.py <version_type>  # On Windows
+    uv sync  # Syncs toml version with lock file
+    ```
